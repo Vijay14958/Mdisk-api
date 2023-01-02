@@ -48,7 +48,7 @@ avl_web = [
 avl_web1 = "".join(f"- {i}\n" for i in avl_web)
 
 
-@Client.on_message(filters.command("start") & filters.private & filters.incoming)
+@Client.on_message(filters.command("start") & filters.private & filters.incoming & filters.user(ADMINS))
 @private_use
 async def start(c: Client, m: Message):
     NEW_USER_REPLY_MARKUP = [
@@ -81,7 +81,7 @@ async def start(c: Client, m: Message):
     )
 
 
-@Client.on_message(filters.command("help") & filters.private)
+@Client.on_message(filters.command("help") & filters.private & filters.user(ADMINS))
 @private_use
 async def help_command(c, m: Message):
     s = HELP_MESSAGE.format(
@@ -98,7 +98,7 @@ async def help_command(c, m: Message):
     await m.reply_text(s, reply_markup=HELP_REPLY_MARKUP, disable_web_page_preview=True)
 
 
-@Client.on_message(filters.command("about"))
+@Client.on_message(filters.command("about") & filters.user(ADMINS))
 @private_use
 async def about_command(c, m: Message):
     reply_markup = ABOUT_REPLY_MARKUP
@@ -117,7 +117,7 @@ async def about_command(c, m: Message):
     )
 
 
-@Client.on_message(filters.command("method") & filters.private)
+@Client.on_message(filters.command("method") & filters.private & filters.user(ADMINS))
 @private_use
 async def method_handler(c: Client, m: Message):
     user_id = m.from_user.id
@@ -151,7 +151,7 @@ async def restart_handler(c: Client, m: Message):
     )
 
 
-@Client.on_message(filters.command("stats") & filters.private)
+@Client.on_message(filters.command("stats") & filters.user(ADMINS) & filters.private)
 @private_use
 async def stats_handler(c: Client, m: Message):
     try:
@@ -187,7 +187,7 @@ async def stats_handler(c: Client, m: Message):
         logging.error(e, exc_info=True)
 
 
-@Client.on_message(filters.command("logs") & filters.user(ADMINS) & filters.private)
+@Client.on_message(filters.command("logs") & filters.private & filters.user(ADMINS))
 @private_use
 async def log_file(bot, message):
     """Send log file"""
@@ -197,7 +197,7 @@ async def log_file(bot, message):
         await message.reply(str(e))
 
 
-@Client.on_message(filters.command("mdisk_api") & filters.private)
+@Client.on_message(filters.command("mdisk_api") & filters.private & filters.user(ADMINS))
 @private_use
 async def mdisk_api_handler(bot, message: Message):
     user_id = message.from_user.id
@@ -211,7 +211,7 @@ async def mdisk_api_handler(bot, message: Message):
         await message.reply(f"Mdisk API updated successfully to {api}")
 
 
-@Client.on_message(filters.command("shortener_api") & filters.private)
+@Client.on_message(filters.command("shortener_api") & filters.private & filters.user(ADMINS))
 @private_use
 async def shortener_api_handler(bot, m: Message):
     user_id = m.from_user.id
@@ -229,7 +229,7 @@ async def shortener_api_handler(bot, m: Message):
         await m.reply(f"Shortener API updated successfully to {api}")
 
 
-@Client.on_message(filters.command("header") & filters.private)
+@Client.on_message(filters.command("header") & filters.private & filters.user(ADMINS))
 @private_use
 async def header_handler(bot, m: Message):
     user_id = m.from_user.id
@@ -250,7 +250,7 @@ async def header_handler(bot, m: Message):
         )
 
 
-@Client.on_message(filters.command("footer") & filters.private)
+@Client.on_message(filters.command("footer") & filters.private & filters.user(ADMINS))
 @private_use
 async def footer_handler(bot, m: Message):
     user_id = m.from_user.id
@@ -272,7 +272,7 @@ async def footer_handler(bot, m: Message):
         await m.reply("Footer Text Updated Successfully")
 
 
-@Client.on_message(filters.command("username") & filters.private)
+@Client.on_message(filters.command("username") & filters.private & filters.user(ADMINS))
 @private_use
 async def username_handler(bot, m: Message):
     user_id = m.from_user.id
@@ -291,7 +291,7 @@ async def username_handler(bot, m: Message):
             await m.reply(f"Username updated successfully to {username}")
 
 
-@Client.on_message(filters.command("banner_image") & filters.private)
+@Client.on_message(filters.command("banner_image") & filters.private & filters.user(ADMINS))
 @private_use
 async def banner_image_handler(bot, m: Message):
     user_id = m.from_user.id
@@ -325,7 +325,7 @@ async def banner_image_handler(bot, m: Message):
                 return await m.reply_text("Image URL is Invalid")
 
 
-@Client.on_message(filters.command("base_site") & filters.private)
+@Client.on_message(filters.command("base_site") & filters.private & filters.user(ADMINS))
 @private_use
 async def base_site_handler(bot, m: Message):
     user_id = m.from_user.id
@@ -343,7 +343,7 @@ async def base_site_handler(bot, m: Message):
         await m.reply("Base Site updated successfully")
 
 
-@Client.on_message(filters.command("me") & filters.private)
+@Client.on_message(filters.command("me") & filters.private & filters.user(ADMINS))
 @private_use
 async def me_handler(bot, m: Message):
     user_id = m.from_user.id
@@ -373,7 +373,7 @@ async def me_handler(bot, m: Message):
     )
 
 
-@Client.on_message(filters.command("include_domain") & filters.private)
+@Client.on_message(filters.command("include_domain") & filters.private & filters.user(ADMINS))
 @private_use
 async def include_domain_handler(bot, m: Message):
     user = await get_user(m.from_user.id)
@@ -408,7 +408,7 @@ async def include_domain_handler(bot, m: Message):
         return await m.reply("Some error updating include domain list")
 
 
-@Client.on_message(filters.command("exclude_domain") & filters.private)
+@Client.on_message(filters.command("exclude_domain") & filters.private & filters.user(ADMINS))
 @private_use
 async def exclude_domain_handler(bot, m: Message):
     user = await get_user(m.from_user.id)
