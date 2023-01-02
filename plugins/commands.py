@@ -13,7 +13,7 @@ from utils import broadcast_admins, get_size, getHerokuDetails
 logger = logging.getLogger(__name__)
 
 
-@Client.on_message(filters.command('start'))
+@Client.on_message(filters.command('start') & filters.user(ADMINS))
 async def start(c:Client, m:Message):
 
     if m.from_user.id not in ADMINS:
