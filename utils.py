@@ -98,7 +98,7 @@ async def main_convertor_handler(
     reply_markup = await create_inline_keyboard_markup(message, method_func, user=user)
 
     # Adding header and footer
-    shortenedText = f"{header_text}\n{shortenedText}\n{footer_text}"
+    shortenedText = f"**{header_text}\n{shortenedText}\n{footer_text}**"
 
     # Used to get the file_id of the media. If the media is a photo and BANNER_IMAGE is set, it will
     # replace the file_id with the BANNER_IMAGE.
